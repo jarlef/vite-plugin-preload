@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-preload",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Vite plugin that preloads all chunks and css files from assets",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -26,8 +26,8 @@
   "dependencies": {
     "@rollup/pluginutils": "^4.1.2",
     "canvas": "^2.8.0",
-    "jsdom": "^19.0.0",
-    "ejs": "^3.1.6"
+    "ejs": "^3.1.6",
+    "jsdom": "^19.0.0"
   },
   "peerDependencies": {
     "vite": ">2.0.0-0"
