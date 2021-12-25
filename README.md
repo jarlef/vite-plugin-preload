@@ -32,7 +32,51 @@ export default defineConfig({
 });
 ```
 
-Result before
+Html before:
+
+```html
+<html>
+  <head>
+    <title>React example</title>
+    <script
+      type="module"
+      crossorigin=""
+      src="/assets/index.06e372d5.js"
+    ></script>
+    <link rel="modulepreload" href="/assets/vendor.4fa92e17.js" />
+    <link rel="stylesheet" href="/assets/index.5de8cc00.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+```
+
+Html after:
+
+```html
+<html>
+  <head>
+    <title>React example</title>
+    <script
+      type="module"
+      crossorigin=""
+      src="/assets/index.06e372d5.js"
+    ></script>
+    <link rel="modulepreload" href="/assets/vendor.4fa92e17.js" />
+    <link rel="stylesheet" href="/assets/index.5de8cc00.css" />
+    <link rel="modulepreload" href="/assets/index.470dc361.js" />
+    <link rel="modulepreload" href="/assets/index.f2bd501d.js" />
+    <link rel="modulepreload" href="/assets/index.79b31f97.js" />
+    <link rel="stylesheet" href="/assets/index.e3157e37.css" />
+    <link rel="stylesheet" href="/assets/index.2921fa01.css" />
+    <link rel="stylesheet" href="/assets/index.ef9b644c.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+```
 
 ## Code splitting
 
