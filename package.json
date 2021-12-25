@@ -1,8 +1,15 @@
 {
   "name": "vite-plugin-preload",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "jarlef",
-  "repository": "jarlef/vite-plugin-preload",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jarlef/vite-plugin-preload"
+  },
+  "bugs": {
+    "url": "https://github.com/jarlef/vite-plugin-preload/issues"
+  },
+  "homepage": "https://github.com/jarlef/vite-plugin-preload/tree/main/#readme",
   "license": "MIT",
   "scripts": {
     "build": "tsup"
