@@ -16,52 +16,54 @@ const cssFilter = createFilter(["**/*.*.css"]);
 export default function VitePluginPreloadAll(
   options?: Partial<PreloadOptions>
 ): Plugin {
-  let resolvedConfig: ResolvedConfig;
-  const resolvedOptions = { ...defaultOptions, ...options };
+  let viteConfig: ResolvedConfig;
+  const mergedOptions = { ...defaultOptions, ...options };
 
   return {
-    name: "vite:preload-all",
+    name: "vite:vite-plugin-preload",
     enforce: "post",
+    apply: "build",
     configResolved(config) {
-      resolvedConfig = config;
+      viteConfig = config;
     },
-    async generateBundle(_, outBundle) {
-      const htmlFile = outBundle[resolvedOptions.htmlFile];
-
-      if (!htmlFile || htmlFile.type != "asset") {
-        return;
-      }
-
-      const dom = createDom(htmlFile.source);
-      const existingLinks = getExistingLinks(dom);
-
-      for (const bundle of Object.values(outBundle)) {
-        const path = `${resolvedConfig.server.base ?? ""}/${bundle.fileName}`;
-
-        if (existingLinks.includes(path)) {
-          continue;
+    transformIndexHtml: {
+      enforce: "post",
+      transform: (html, ctx) => {
+        if (!ctx.bundle) {
+          return html;
         }
 
-        if (
-          resolvedOptions.includeJs &&
-          bundle.type === "chunk" &&
-          jsFilter(bundle.fileName)
-        ) {
-          const link = createModulePreloadLinkElement(dom, path);
-          appendToDom(dom, link);
+        const dom = createDom(html);
+        const existingLinks = getExistingLinks(dom);
+
+        for (const bundle of Object.values(ctx.bundle)) {
+          const path = `${viteConfig.server.base ?? ""}/${bundle.fileName}`;
+
+          if (existingLinks.includes(path)) {
+            continue;
+          }
+
+          if (
+            mergedOptions.includeJs &&
+            bundle.type === "chunk" &&
+            jsFilter(bundle.fileName)
+          ) {
+            const link = createModulePreloadLinkElement(dom, path);
+            appendToDom(dom, link);
+          }
+
+          if (
+            mergedOptions.includeCss &&
+            bundle.type === "asset" &&
+            cssFilter(bundle.fileName)
+          ) {
+            const link = createStylesheetLinkElement(dom, path);
+            appendToDom(dom, link);
+          }
         }
 
-        if (
-          resolvedOptions.includeCss &&
-          bundle.type === "asset" &&
-          cssFilter(bundle.fileName)
-        ) {
-          const link = createStylesheetLinkElement(dom, path);
-          appendToDom(dom, link);
-        }
-      }
-
-      htmlFile.source = prettier.format(dom.serialize(), { parser: "html" });
+        return prettier.format(dom.serialize(), { parser: "html" });
+      },
     },
   };
 }
