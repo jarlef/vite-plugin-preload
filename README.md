@@ -1,5 +1,7 @@
 # vite-plugin-preload
 
+[![npm version](https://badge.fury.io/js/vite-plugin-preload.svg)](https://badge.fury.io/js/vite-plugin-preload)
+
 A Plugin to preload all chunks and stylesheets when dealing with code splitting through
 frameworks (e.g React.lazy) instead of manualChunks in Vite
 
