@@ -19,6 +19,8 @@ npm i vite-plugin-preload -D
 
 ## Usage
 
+Configuration
+
 ```javascript
 // vite.config.js
 import { defineConfig } from "vite";
@@ -29,6 +31,8 @@ export default defineConfig({
   plugins: [react(), preload()],
 });
 ```
+
+Result before
 
 ## Code splitting
 

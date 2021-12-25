@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "prepreview": "yarn build",
+    "prepreview": "vite build",
     "preview": "vite preview"
   },
   "keywords": [],
