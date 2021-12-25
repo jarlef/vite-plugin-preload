@@ -3,6 +3,31 @@
 A Plugin to preload all chunks and stylesheets when dealing with code splitting through
 frameworks (e.g React.lazy) instead of manualChunks in Vite
 
+## Installation
+
+```sh
+yarn add vite-plugin-preload --dev
+```
+
+or
+
+```sh
+npm i vite-plugin-preload -D
+```
+
+## Usage
+
+```javascript
+// vite.config.js
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import preload from "vite-plugin-preload";
+
+export default defineConfig({
+  plugins: [react(), preload()],
+});
+```
+
 ## Code splitting
 
 When producing code splits using manual chunking in rollup, all chunks are added to
