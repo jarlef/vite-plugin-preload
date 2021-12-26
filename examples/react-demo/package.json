@@ -2,8 +2,7 @@
   "name": "vite-plugin-preload-react-demo",
   "version": "1.0.0",
   "private": true,
-  "description": "",
-  "main": "index.js",
+  "description": "React demo project using React.lazy + vite-plugin-preload",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,7 +10,7 @@
     "preview": "vite preview"
   },
   "keywords": [],
-  "author": "",
+  "author": "jarlef",
   "license": "ISC",
   "dependencies": {
     "react": "^17.0.2",
