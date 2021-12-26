@@ -13,6 +13,11 @@ import prettier from "prettier";
 const jsFilter = createFilter(["**/*.*.js"]);
 const cssFilter = createFilter(["**/*.*.css"]);
 
+interface AdditionalLink {
+  type: "js" | "css";
+  path: string;
+}
+
 export default function VitePluginPreloadAll(
   options?: Partial<PreloadOptions>
 ): Plugin {
@@ -35,6 +40,8 @@ export default function VitePluginPreloadAll(
 
         const dom = createDom(html);
         const existingLinks = getExistingLinks(dom);
+        let additionalModules: string[] = [];
+        let additionalStylesheets: string[] = [];
 
         for (const bundle of Object.values(ctx.bundle)) {
           const path = `${viteConfig.server.base ?? ""}/${bundle.fileName}`;
@@ -48,8 +55,7 @@ export default function VitePluginPreloadAll(
             bundle.type === "chunk" &&
             jsFilter(bundle.fileName)
           ) {
-            const link = createModulePreloadLinkElement(dom, path);
-            appendToDom(dom, link);
+            additionalModules.push(path);
           }
 
           if (
@@ -57,9 +63,29 @@ export default function VitePluginPreloadAll(
             bundle.type === "asset" &&
             cssFilter(bundle.fileName)
           ) {
-            const link = createStylesheetLinkElement(dom, path);
-            appendToDom(dom, link);
+            additionalStylesheets.push(path);
           }
+        }
+
+        additionalModules = additionalModules.sort((a, z) =>
+          a.localeCompare(z)
+        );
+
+        additionalStylesheets = additionalStylesheets.sort((a, z) =>
+          a.localeCompare(z)
+        );
+
+        for (const additionalModule of additionalModules) {
+          const element = createModulePreloadLinkElement(dom, additionalModule);
+          appendToDom(dom, element);
+        }
+
+        for (const additionalStylesheet of additionalStylesheets) {
+          const element = createStylesheetLinkElement(
+            dom,
+            additionalStylesheet
+          );
+          appendToDom(dom, element);
         }
 
         return prettier.format(dom.serialize(), { parser: "html" });

@@ -12,7 +12,10 @@
   "homepage": "https://github.com/jarlef/vite-plugin-preload/tree/main/#readme",
   "license": "MIT",
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "test": "jest",
+    "prepack": "yarn build",
+    "prepublish": "yarn test"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -33,6 +36,7 @@
   ],
   "dependencies": {
     "@rollup/pluginutils": "^4.1.2",
+    "@types/jest": "^27.0.3",
     "canvas": "^2.8.0",
     "ejs": "^3.1.6",
     "jsdom": "^19.0.0",
@@ -42,10 +46,14 @@
     "vite": ">=2.0.0"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.123",
+    "@swc/jest": "^0.2.15",
     "@types/ejs": "^3.1.0",
     "@types/jsdom": "^16.2.14",
     "@types/node": "^17.0.4",
     "@types/prettier": "^2.4.2",
+    "jest": "^27.4.5",
+    "regenerator-runtime": "^0.13.9",
     "tsup": "^5.11.7",
     "typescript": "^4.5.4",
     "vite": "^2.7.6"
