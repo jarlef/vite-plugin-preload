@@ -1,4 +1,5 @@
 import fs from "fs";
+import { test, describe, expect } from "vitest";
 
 const getFiles = (path, extension) => {
   const files = fs.readdirSync(path);

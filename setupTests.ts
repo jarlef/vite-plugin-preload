@@ -1,4 +1,5 @@
 import { exec } from "child_process";
+import { beforeAll } from "vitest";
 
 const execShellCommand = (cmd) => {
   return new Promise((resolve, reject) => {
