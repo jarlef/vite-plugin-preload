@@ -15,7 +15,7 @@ export const getDom = (): JSDOM => {
   return new JSDOM(htmlContent);
 };
 
-const getFiles = (path, extension) => {
+const getFiles = (path: fs.PathLike, extension: string): string[] => {
   const files = fs.readdirSync(path);
   return files.filter((file) =>
     file.match(new RegExp(`.*\.(${extension})`, "ig"))
@@ -33,11 +33,12 @@ describe("vite-plugin-preload", () => {
 
   it("html contain main js module", async () => {
     const dom = getDom();
-    const mainScriptMatch = dom.window.document.querySelector(
-      'script[type="module"]'
-    );
+    const mainScriptMatch =
+      dom.window.document.querySelector<HTMLScriptElement>(
+        'script[type="module"]'
+      );
     expect(mainScriptMatch).toBeTruthy();
-    const ref = mainScriptMatch?.getAttribute("src");
+    const ref = mainScriptMatch?.src;
     const jsChunks = getFiles(assetsDirectory, "js");
     const jsRefs = jsChunks.map((c) => `/assets/${c}`);
     expect(jsRefs).toContain(ref);
@@ -45,13 +46,12 @@ describe("vite-plugin-preload", () => {
 
   it("html contains preload js modules", async () => {
     const dom = getDom();
-    const scriptPreloads = dom.window.document.querySelectorAll(
-      'link[rel="modulepreload"]'
-    );
+    const scriptPreloads =
+      dom.window.document.querySelectorAll<HTMLLinkElement>(
+        'link[rel="modulepreload"]'
+      );
 
-    const scriptRefs = Array.from(scriptPreloads.values()).map((x) =>
-      x.getAttribute("href")
-    );
+    const scriptRefs = Array.from(scriptPreloads.values()).map((x) => x.href);
 
     const jsChunks = getFiles(assetsDirectory, "js");
     const jsRefs = jsChunks.map((c) => `/assets/${c}`);
@@ -62,12 +62,13 @@ describe("vite-plugin-preload", () => {
 
   it("html contains css references", async () => {
     const dom = getDom();
-    const scriptPreloads = dom.window.document.querySelectorAll(
-      'link[rel="stylesheet"]'
-    );
+    const scriptPreloads =
+      dom.window.document.querySelectorAll<HTMLLinkElement>(
+        'link[rel="stylesheet"]'
+      );
 
-    const stylesheetRefs = Array.from(scriptPreloads.values()).map((x) =>
-      x.getAttribute("href")
+    const stylesheetRefs = Array.from(scriptPreloads.values()).map(
+      (x) => x.href
     );
 
     const cssChunks = getFiles(assetsDirectory, "css");

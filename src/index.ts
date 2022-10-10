@@ -13,11 +13,6 @@ import prettier from "prettier";
 const jsFilter = createFilter(["**/*.*.js"]);
 const cssFilter = createFilter(["**/*.*.css"]);
 
-interface AdditionalLink {
-  type: "js" | "css";
-  path: string;
-}
-
 export default function VitePluginPreloadAll(
   options?: Partial<PreloadOptions>
 ): Plugin {
