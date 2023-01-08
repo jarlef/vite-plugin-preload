@@ -10,8 +10,8 @@ import {
 } from "./dom-utils";
 import prettier from "prettier";
 
-const jsFilter = createFilter(["**/*.*.js"]);
-const cssFilter = createFilter(["**/*.*.css"]);
+const jsFilter = createFilter(["**/*-*.js"]);
+const cssFilter = createFilter(["**/*-*.css"]);
 
 export default function VitePluginPreloadAll(
   options?: Partial<PreloadOptions>
