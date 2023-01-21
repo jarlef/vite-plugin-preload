@@ -36,21 +36,21 @@
     "dist"
   ],
   "dependencies": {
-    "@rollup/pluginutils": "^4.2.1",
-    "jsdom": "^20.0.1",
-    "prettier": "^2.7.1"
+    "@rollup/pluginutils": "^5.0.2",
+    "jsdom": "^21.0.0",
+    "prettier": "^2.8.3"
   },
   "peerDependencies": {
     "vite": ">=4.0.0"
   },
   "devDependencies": {
-    "@types/jsdom": "^20.0.0",
-    "@types/node": "^18.8.3",
-    "@types/prettier": "^2.7.1",
+    "@types/jsdom": "^20.0.1",
+    "@types/node": "^18.11.18",
+    "@types/prettier": "^2.7.2",
     "del-cli": "^5.0.0",
-    "tsup": "^6.2.3",
-    "typescript": "^4.8.4",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4",
     "vite": "^4.0.4",
-    "vitest": "^0.26.3"
+    "vitest": "^0.27.3"
   }
 }
