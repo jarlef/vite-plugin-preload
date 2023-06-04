@@ -1,15 +1,15 @@
 {
-  "name": "vite-plugin-preload",
+  "name": "@bengry/vite-plugin-preload",
   "version": "0.2.0",
-  "author": "jarlef",
+  "author": "Ben Grynhaus <me@bengr.dev>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jarlef/vite-plugin-preload"
+    "url": "https://github.com/bengry/vite-plugin-preload"
   },
   "bugs": {
-    "url": "https://github.com/jarlef/vite-plugin-preload/issues"
+    "url": "https://github.com/bengry/vite-plugin-preload/issues"
   },
-  "homepage": "https://github.com/jarlef/vite-plugin-preload/tree/main/#readme",
+  "homepage": "https://github.com/bengry/vite-plugin-preload/tree/main/#readme",
   "license": "MIT",
   "scripts": {
     "clean": "del dist \"./examples/*/dist/\" \"./examples/*/node_modules/\"",
