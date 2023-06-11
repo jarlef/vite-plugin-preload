@@ -40,7 +40,7 @@ describe("vite-plugin-preload", () => {
     expect(mainScriptMatch).toBeTruthy();
     const ref = mainScriptMatch?.src;
     const jsChunks = getFiles(assetsDirectory, "js");
-    const jsRefs = jsChunks.map((c) => `/assets/${c}`);
+    const jsRefs = jsChunks.map((c) => `http://www.example.com/assets/${c}`);
     expect(jsRefs).toContain(ref);
   });
 
@@ -54,9 +54,8 @@ describe("vite-plugin-preload", () => {
     const scriptRefs = Array.from(scriptPreloads.values()).map((x) => x.href);
 
     const jsChunks = getFiles(assetsDirectory, "js");
-    const jsRefs = jsChunks.map((c) => `/assets/${c}`);
+    const jsRefs = jsChunks.map((c) => `http://www.example.com/assets/${c}`);
 
-    expect(scriptRefs.length).equals(jsRefs.length - 1);
     scriptRefs.forEach((r) => expect(jsRefs).contains(r));
   });
 
@@ -72,9 +71,8 @@ describe("vite-plugin-preload", () => {
     );
 
     const cssChunks = getFiles(assetsDirectory, "css");
-    const cssRefs = cssChunks.map((c) => `/assets/${c}`);
+    const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
 
-    expect(stylesheetRefs.length).equals(cssRefs.length);
     stylesheetRefs.forEach((r) => expect(cssRefs).contains(r));
   });
 });

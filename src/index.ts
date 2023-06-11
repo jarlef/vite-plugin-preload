@@ -9,6 +9,7 @@ import {
   getExistingLinks,
 } from "./dom-utils";
 import prettier from "prettier";
+import { join } from "path";
 
 const jsFilter = createFilter(["**/*-*.js"]);
 const cssFilter = createFilter(["**/*-*.css"]);
@@ -33,13 +34,14 @@ export default function VitePluginPreloadAll(
           return html;
         }
 
+        const base = viteConfig.base ?? "";
         const dom = createDom(html);
         const existingLinks = getExistingLinks(dom);
         let additionalModules: string[] = [];
         let additionalStylesheets: string[] = [];
 
         for (const bundle of Object.values(ctx.bundle)) {
-          const path = `${viteConfig.base ?? ""}/${bundle.fileName}`;
+          const path = join(base, bundle.fileName);
 
           if (existingLinks.includes(path)) {
             continue;
