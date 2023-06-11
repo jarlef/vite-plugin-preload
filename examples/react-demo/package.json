@@ -15,14 +15,14 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router": "^6.4.2",
-    "react-router-dom": "^6.4.2"
+    "react-router": "^6.12.1",
+    "react-router-dom": "^6.12.1"
   },
   "devDependencies": {
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^3.0.1",
-    "vite": "^4.0.4",
+    "@types/react": "^18.2.11",
+    "@types/react-dom": "^18.2.4",
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^4.3.9",
     "vite-plugin-preload": "link:../.."
   }
 }
