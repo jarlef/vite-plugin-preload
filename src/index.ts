@@ -85,7 +85,18 @@ export default function VitePluginPreloadAll(
           appendToDom(dom, element);
         }
 
-        return prettier.format(dom.serialize(), { parser: "html" });
+        const unformattedHtml = dom.serialize();
+
+        if (mergedOptions.format === false) {
+          return unformattedHtml;
+        }
+
+        return prettier.format(unformattedHtml, {
+          ...(typeof mergedOptions.format === "object"
+            ? mergedOptions.format
+            : {}),
+          parser: "html",
+        });
       },
     },
   };
