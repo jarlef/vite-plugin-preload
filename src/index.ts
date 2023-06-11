@@ -39,7 +39,7 @@ export default function VitePluginPreloadAll(
         let additionalStylesheets: string[] = [];
 
         for (const bundle of Object.values(ctx.bundle)) {
-          const path = `${viteConfig.server.base ?? ""}/${bundle.fileName}`;
+          const path = `${viteConfig.base ?? ""}/${bundle.fileName}`;
 
           if (existingLinks.includes(path)) {
             continue;

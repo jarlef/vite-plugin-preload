@@ -4,4 +4,5 @@ import preload from "vite-plugin-preload";
 
 export default defineConfig({
   plugins: [react(), preload()],
+  base: "http://www.example.com",
 });
