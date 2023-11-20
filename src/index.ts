@@ -28,8 +28,8 @@ export default function VitePluginPreloadAll(
       viteConfig = config;
     },
     transformIndexHtml: {
-      enforce: "post",
-      transform: (html, ctx) => {
+      order: "post",
+      handler: (html, ctx) => {
         if (!ctx.bundle) {
           return html;
         }
