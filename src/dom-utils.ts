@@ -10,6 +10,13 @@ export const createModulePreloadLinkElement = (dom: JSDOM, path: string) => {
   return link;
 };
 
+export const createPrefetchLinkElement = (dom: JSDOM, path: string) => {
+  const link = dom.window.document.createElement("link");
+  link.rel = "prefetch";
+  link.href = path;
+  return link;
+};
+
 export const createStylesheetLinkElement = (dom: JSDOM, path: string) => {
   const link = dom.window.document.createElement("link");
   link.rel = "stylesheet";

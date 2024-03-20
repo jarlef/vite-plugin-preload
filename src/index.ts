@@ -6,6 +6,7 @@ import {
   createDom,
   createModulePreloadLinkElement,
   createStylesheetLinkElement,
+  createPrefetchLinkElement,
   getExistingLinks,
 } from "./dom-utils";
 import prettier from "prettier";
@@ -72,19 +73,37 @@ export default function VitePluginPreloadAll(
           a.localeCompare(z)
         );
 
-        for (const additionalModule of additionalModules) {
-          const element = createModulePreloadLinkElement(dom, additionalModule);
-          appendToDom(dom, element);
-        }
+        if (mergedOptions.mode === 'preload') {
+          for (const additionalModule of additionalModules) {
+            const element = createModulePreloadLinkElement(dom, additionalModule);
+            appendToDom(dom, element);
+          }
 
-        for (const additionalStylesheet of additionalStylesheets) {
-          const element = createStylesheetLinkElement(
-            dom,
-            additionalStylesheet
-          );
-          appendToDom(dom, element);
+          for (const additionalStylesheet of additionalStylesheets) {
+            const element = createStylesheetLinkElement(
+              dom,
+              additionalStylesheet
+            );
+            appendToDom(dom, element);
+          }
         }
+        else if (mergedOptions.mode === 'prefetch') {
+          for (const additionalModule of additionalModules) {
+            const element = createPrefetchLinkElement(dom, additionalModule);
+            appendToDom(dom, element);
+          }
 
+          for (const additionalStylesheet of additionalStylesheets) {
+            const element = createPrefetchLinkElement(
+              dom,
+              additionalStylesheet
+            );
+            appendToDom(dom, element);
+          }
+        }
+        else {
+          throw new Error(`Unsupported "mode" option: ${mergedOptions.mode}`);
+        }
         const unformattedHtml = dom.serialize();
 
         if (mergedOptions.format === false) {
