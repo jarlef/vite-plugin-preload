@@ -1,4 +1,5 @@
 import type { Options as PrettierOptions } from "prettier";
+import type { OutputChunk, OutputAsset } from "rollup";
 
 export interface PreloadOptions {
   /**
@@ -17,6 +18,10 @@ export interface PreloadOptions {
    * @default modulepreload
    */
   mode?: 'preload' | 'prefetch';
+  /**
+   * @default () => true
+   */
+  shouldPreload: (chunkInfo: OutputChunk | OutputAsset) => boolean;
 }
 
 export const defaultOptions: PreloadOptions = {
@@ -24,4 +29,5 @@ export const defaultOptions: PreloadOptions = {
   includeCss: true,
   format: true,
   mode: 'preload',
+  shouldPreload: () => true
 };
