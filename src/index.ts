@@ -11,6 +11,7 @@ import {
 } from "./dom-utils";
 import prettier from "prettier";
 import { resolve } from "url";
+import { normalize } from "path";
 
 const jsFilter = createFilter(["**/*-*.js"]);
 const cssFilter = createFilter(["**/*-*.css"]);
@@ -42,7 +43,7 @@ export default function VitePluginPreloadAll(
         let additionalStylesheets: string[] = [];
 
         for (const bundle of Object.values(ctx.bundle)) {
-          const path = resolve(base, bundle.fileName);
+          const path = normalize(resolve(base, bundle.fileName));
 
           if (
             existingLinks.includes(path) ||
@@ -76,9 +77,12 @@ export default function VitePluginPreloadAll(
           a.localeCompare(z)
         );
 
-        if (mergedOptions.mode === 'preload') {
+        if (mergedOptions.mode === "preload") {
           for (const additionalModule of additionalModules) {
-            const element = createModulePreloadLinkElement(dom, additionalModule);
+            const element = createModulePreloadLinkElement(
+              dom,
+              additionalModule
+            );
             appendToDom(dom, element);
           }
 
@@ -89,8 +93,7 @@ export default function VitePluginPreloadAll(
             );
             appendToDom(dom, element);
           }
-        }
-        else if (mergedOptions.mode === 'prefetch') {
+        } else if (mergedOptions.mode === "prefetch") {
           for (const additionalModule of additionalModules) {
             const element = createPrefetchLinkElement(dom, additionalModule);
             appendToDom(dom, element);
@@ -103,8 +106,7 @@ export default function VitePluginPreloadAll(
             );
             appendToDom(dom, element);
           }
-        }
-        else {
+        } else {
           throw new Error(`Unsupported "mode" option: ${mergedOptions.mode}`);
         }
         const unformattedHtml = dom.serialize();
