@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom";
-
+import { normalize } from "path";
 export const createDom = (source: string | Uint8Array): JSDOM =>
   new JSDOM(source);
 
@@ -38,7 +38,7 @@ export const getExistingLinks = (dom: JSDOM): string[] => {
 
   dom.window.document
     .querySelectorAll<HTMLLinkElement>("link")
-    .forEach((l) => existingLinks.push(l.href));
+    .forEach((l) => existingLinks.push(normalize(l.href)));
 
   return existingLinks;
 };
