@@ -11,7 +11,8 @@ import {
 } from "./dom-utils";
 import prettier from "prettier";
 import { resolve } from "url";
-import { normalize } from "path";
+import { dirname, normalize, resolve as resolvePath } from "path";
+import fs, { promises as fsAsync } from "fs";
 
 const jsFilter = createFilter(["**/*-*.js"]);
 const cssFilter = createFilter(["**/*-*.css"]);
@@ -21,13 +22,36 @@ export default function VitePluginPreloadAll(
 ): Plugin {
   let viteConfig: ResolvedConfig;
   const mergedOptions = { ...defaultOptions, ...options };
-
+  let additionalModules: string[] = [];
+  let additionalStylesheets: string[] = [];
   return {
     name: "vite:vite-plugin-preload",
     enforce: "post",
     apply: "build",
     configResolved(config) {
       viteConfig = config;
+    },
+    async writeBundle({ dir }) {
+      if (!dir || !mergedOptions.generatePreloadManifestJsonPath) {
+        return;
+      }
+      const preloadJsonPath = resolvePath(
+        dir,
+        mergedOptions.generatePreloadManifestJsonPath
+      );
+      const parentDir = dirname(preloadJsonPath);
+      if (!fs.existsSync(parentDir)) {
+        await fsAsync.mkdir(parentDir);
+      }
+      const manifestJson = fs.existsSync(preloadJsonPath)
+        ? JSON.parse(fs.readFileSync(preloadJsonPath, "utf8"))
+        : {};
+      manifestJson.preloadModules = additionalModules;
+      manifestJson.preloadStylesheets = additionalStylesheets;
+      await fsAsync.writeFile(
+        preloadJsonPath,
+        JSON.stringify(manifestJson, null, 2)
+      );
     },
     transformIndexHtml: {
       order: "post",
@@ -39,8 +63,6 @@ export default function VitePluginPreloadAll(
         const base = viteConfig.base ?? "";
         const dom = createDom(html);
         const existingLinks = getExistingLinks(dom);
-        let additionalModules: string[] = [];
-        let additionalStylesheets: string[] = [];
 
         for (const bundle of Object.values(ctx.bundle)) {
           const path = normalize(resolve(base, bundle.fileName));

@@ -5,6 +5,7 @@ import { JSDOM } from "jsdom";
 const dist = "examples/react-demo/dist";
 const htmlFile = `${dist}/index.html`;
 const assetsDirectory = `${dist}/assets`;
+const manifestFile = `${dist}/.vite/manifest.json`;
 
 export const getDom = (): JSDOM => {
   const htmlContent = fs.readFileSync(htmlFile, {
@@ -74,5 +75,21 @@ describe("vite-plugin-preload", () => {
     const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
 
     stylesheetRefs.forEach((r) => expect(cssRefs).contains(r));
+  });
+
+  it("manifest json includes preload information", async () => {
+    expect(fs.existsSync(manifestFile));
+    const manifestJson = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
+    expect(manifestJson.preloadModules).toStrictEqual([
+      'http:/www.example.com/assets/index-anaWoCzC.js',
+      'http:/www.example.com/assets/index-B2KHv6gp.js',
+      'http:/www.example.com/assets/index-DR3rjWxH.js',
+      'http:/www.example.com/assets/index-q1TMq3ZU.js'
+    ])
+    expect(manifestJson.preloadStylesheets).toStrictEqual([
+      'http:/www.example.com/assets/index-8_aBiA4K.css',
+      'http:/www.example.com/assets/index-D8XkVD9g.css',
+      'http:/www.example.com/assets/index-DgcS6T3X.css'
+    ])
   });
 });

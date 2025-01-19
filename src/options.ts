@@ -22,6 +22,10 @@ export interface PreloadOptions {
    * @default () => true
    */
   shouldPreload: (chunkInfo: OutputChunk | OutputAsset) => boolean;
+  /**
+   * @default undefined
+   */
+  generatePreloadManifestJsonPath?: string
 }
 
 export const defaultOptions: PreloadOptions = {
