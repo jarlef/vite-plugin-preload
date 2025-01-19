@@ -65,10 +65,9 @@ export default function VitePluginPreloadAll(
         const existingLinks = getExistingLinks(dom);
 
         for (const bundle of Object.values(ctx.bundle)) {
-          const path = normalize(resolve(base, bundle.fileName));
-
+          const path = resolve(base, bundle.fileName);
           if (
-            existingLinks.includes(path) ||
+            existingLinks.includes(normalize(path)) ||
             !mergedOptions.shouldPreload(bundle)
           ) {
             continue;

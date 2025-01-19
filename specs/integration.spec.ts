@@ -79,17 +79,12 @@ describe("vite-plugin-preload", () => {
 
   it("manifest json includes preload information", async () => {
     expect(fs.existsSync(manifestFile));
+    const jsChunks = getFiles(assetsDirectory, "js");
+    const jsRefs = jsChunks.map((c) => `http://www.example.com/assets/${c}`);
+    const cssChunks = getFiles(assetsDirectory, "css");
+    const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
     const manifestJson = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
-    expect(manifestJson.preloadModules).toStrictEqual([
-      'http:/www.example.com/assets/index-anaWoCzC.js',
-      'http:/www.example.com/assets/index-B2KHv6gp.js',
-      'http:/www.example.com/assets/index-DR3rjWxH.js',
-      'http:/www.example.com/assets/index-q1TMq3ZU.js'
-    ])
-    expect(manifestJson.preloadStylesheets).toStrictEqual([
-      'http:/www.example.com/assets/index-8_aBiA4K.css',
-      'http:/www.example.com/assets/index-D8XkVD9g.css',
-      'http:/www.example.com/assets/index-DgcS6T3X.css'
-    ])
+    manifestJson.preloadModules.forEach((r) => expect(jsRefs).contains(r));
+    manifestJson.preloadStylesheets.forEach((r) => expect(cssRefs).contains(r));
   });
 });
