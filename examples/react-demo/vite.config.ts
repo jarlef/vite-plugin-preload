@@ -11,6 +11,6 @@ export default defineConfig({
   ],
   base: "http://www.example.com",
   build: {
-    manifest: true,
-  },
+    manifest: true
+  }
 });
