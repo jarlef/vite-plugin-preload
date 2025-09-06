@@ -1,0 +1,10 @@
+{
+	"files": {
+		"includes": [
+			"src/**/*.ts",
+			"examples/**",
+			"specs/**/*.ts",
+			"!**/dist"
+		]
+	}
+}

@@ -14,6 +14,8 @@
   "scripts": {
     "clean": "del dist \"./examples/*/dist/\" \"./examples/*/node_modules/\"",
     "build": "tsup",
+    "lint": "biome lint",
+    "format": "biome format",
     "pretest": "yarn build",
     "test": "vitest",
     "prepack": "yarn build"
@@ -45,6 +47,7 @@
     "vite": ">=5.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.3",
     "@types/jsdom": "^21.1.6",
     "@types/node": "^20.11.30",
     "@types/prettier": "^3.0.0",

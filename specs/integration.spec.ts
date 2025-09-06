@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import { it, describe, expect } from "vitest";
 import { JSDOM } from "jsdom";
 
@@ -7,7 +7,7 @@ const htmlFile = `${dist}/index.html`;
 const assetsDirectory = `${dist}/assets`;
 const manifestFile = `${dist}/.vite/manifest.json`;
 
-export const getDom = (): JSDOM => {
+const getDom = (): JSDOM => {
   const htmlContent = fs.readFileSync(htmlFile, {
     encoding: "utf8",
     flag: "r",
@@ -19,7 +19,7 @@ export const getDom = (): JSDOM => {
 const getFiles = (path: fs.PathLike, extension: string): string[] => {
   const files = fs.readdirSync(path);
   return files.filter((file) =>
-    file.match(new RegExp(`.*\.(${extension})`, "ig"))
+    file.match(new RegExp(`.*.(${extension})`, "ig"))
   );
 };
 
@@ -57,7 +57,7 @@ describe("vite-plugin-preload", () => {
     const jsChunks = getFiles(assetsDirectory, "js");
     const jsRefs = jsChunks.map((c) => `http://www.example.com/assets/${c}`);
 
-    scriptRefs.forEach((r) => expect(jsRefs).contains(r));
+    scriptRefs.forEach((r) => {expect(jsRefs).contains(r)});
   });
 
   it("html contains css references", async () => {
@@ -74,7 +74,7 @@ describe("vite-plugin-preload", () => {
     const cssChunks = getFiles(assetsDirectory, "css");
     const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
 
-    stylesheetRefs.forEach((r) => expect(cssRefs).contains(r));
+    stylesheetRefs.forEach((r) => {expect(cssRefs).contains(r)});
   });
 
   it("manifest json includes preload information", async () => {
@@ -84,7 +84,7 @@ describe("vite-plugin-preload", () => {
     const cssChunks = getFiles(assetsDirectory, "css");
     const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
     const manifestJson = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
-    manifestJson.preloadModules.forEach((r) => expect(jsRefs).contains(r));
-    manifestJson.preloadStylesheets.forEach((r) => expect(cssRefs).contains(r));
+    manifestJson.preloadModules.forEach((r) => {expect(jsRefs).contains(r)});
+    manifestJson.preloadStylesheets.forEach((r) => {expect(cssRefs).contains(r)});
   });
 });
