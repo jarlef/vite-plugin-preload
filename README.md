@@ -32,6 +32,19 @@ export default defineConfig({
 });
 ```
 
+### Options
+
+```ts
+interface PreloadOptions {
+  includeJs: boolean;
+  includeCss: boolean;
+  format?: boolean | Omit<PrettierOptions, "parser">;
+  mode?: 'preload' | 'prefetch';
+  shouldPreload: (chunkInfo: OutputChunk | OutputAsset) => boolean;
+  generatePreloadManifestJsonPath?: string
+}
+```
+
 Html before:
 
 ```html
@@ -90,7 +103,7 @@ If you however decide to use the react way of performing code splitting by trigg
 
 In short. Performance and stability.
 
-### Performance. Developer performance that is.
+### Performance. Developer performance that is
 
 Code splitting is good for developer performance. As your code base grows, more files are sent from your
 src directory when starting the vite dev server. This can be slow. Really slow. Why pre-serve the entire code base when its not needed. Using code splitting with Reacy.lazy, vite is only serving the modules used for the currently loaded component tree and load more chunks is performed async. Hurray

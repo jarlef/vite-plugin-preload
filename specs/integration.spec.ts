@@ -5,6 +5,7 @@ import { JSDOM } from "jsdom";
 const dist = "examples/react-demo/dist";
 const htmlFile = `${dist}/index.html`;
 const assetsDirectory = `${dist}/assets`;
+const manifestFile = `${dist}/.vite/manifest.json`;
 
 export const getDom = (): JSDOM => {
   const htmlContent = fs.readFileSync(htmlFile, {
@@ -74,5 +75,16 @@ describe("vite-plugin-preload", () => {
     const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
 
     stylesheetRefs.forEach((r) => expect(cssRefs).contains(r));
+  });
+
+  it("manifest json includes preload information", async () => {
+    expect(fs.existsSync(manifestFile));
+    const jsChunks = getFiles(assetsDirectory, "js");
+    const jsRefs = jsChunks.map((c) => `http://www.example.com/assets/${c}`);
+    const cssChunks = getFiles(assetsDirectory, "css");
+    const cssRefs = cssChunks.map((c) => `http://www.example.com/assets/${c}`);
+    const manifestJson = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
+    manifestJson.preloadModules.forEach((r) => expect(jsRefs).contains(r));
+    manifestJson.preloadStylesheets.forEach((r) => expect(cssRefs).contains(r));
   });
 });
