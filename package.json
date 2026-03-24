@@ -16,7 +16,6 @@
     "build": "tsup",
     "lint": "biome lint",
     "format": "biome format",
-    "pretest": "yarn build",
     "test": "vitest",
     "prepack": "yarn build"
   },
