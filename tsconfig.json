@@ -6,7 +6,7 @@
     "declarationDir": "dist/types/",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "bundler",
   },
   "files": ["src/index.ts"]
 }
