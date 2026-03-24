@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-preload",
-  "version": "0.4.4",
+  "version": "0.7.0",
   "author": "jarlef",
   "repository": {
     "type": "git",
@@ -21,7 +21,6 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  
   "exports": {
     "types": "./dist/index.d.mts",
     "import": "./dist/index.mjs",
