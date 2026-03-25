@@ -28,6 +28,7 @@
   },
   "keywords": [
     "vite",
+    "vite-plugin",
     "preload",
     "plugin",
     "bundle"
